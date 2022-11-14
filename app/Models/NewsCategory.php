@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Model;
+namespace App\Models;
 
 
 
-class Category
+class NewsCategory
 {
     private array $categories = [
         1 => [

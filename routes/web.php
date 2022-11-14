@@ -41,12 +41,17 @@ Route::name('admin.')
     ->namespace('Admin')
     ->group(function () {
         Route::get('/', [AdminIndexController::class, 'index'])->name('index');
+        Route::match(['get', 'post'], '/create', [AdminIndexController::class, 'create'])->name('create');
         Route::get('/test1', [AdminIndexController::class, 'test1'])->name('test1');
         Route::get('/test2', [AdminIndexController::class, 'test2'])->name('test2');
     });
-
+/*
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
+*/
 require __DIR__.'/auth.php';
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
