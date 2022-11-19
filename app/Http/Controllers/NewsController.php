@@ -16,4 +16,12 @@ class NewsController extends Controller
     {
         return view('news.one')->with('news', $news->getNewsId($id));
     }
+
+    public function save($id, News $news)
+    {
+        return response()->json($news->getNews()[$id])
+            ->header('Content-Disposition', 'attachment; filename = "news.txt"')
+            ->setEncodingOptions(JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        //return view('news.one')->with('news', $news->getNewsId($id));
+    }
 }

@@ -29,10 +29,12 @@ Route::name('news.')
     ->group(function () {
         Route::get('/', [NewsController::class, 'index'])->name('index');
         Route::get('/one/{id}', [NewsController::class, 'show'])->name('show');
+        Route::get('/save/{id}', [NewsController::class, 'save'])->name('save');
         Route::name('category.')
             ->group(function () {
                 Route::get('categories', [CategoryController::class, 'index'])->name('index');
                 Route::get('category/{slug}', [CategoryController::class, 'show'])->name('show');
+                Route::get('category/save/{slug}', [CategoryController::class, 'save'])->name('save');
             });
     });
 
@@ -55,3 +57,7 @@ require __DIR__.'/auth.php';
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/save', [HomeController::class, 'save'])->name('save');
+Route::get('/ssave', [HomeController::class, 'ssave'])->name('ssave');
+

@@ -4,20 +4,11 @@ namespace App\Models;
 
 
 
+use Illuminate\Support\Facades\Storage;
+
 class NewsCategory
 {
-    private array $categories = [
-        1 => [
-            'id' => 1,
-            'title' => 'Спорт',
-            'slug' => 'sport'
-        ],
-        2 => [
-            'id' => 2,
-            'title' => 'Политика',
-            'slug' => 'politics'
-        ],
-    ];
+
 
     public function getCategoryNameBySlug($slug)
     {
@@ -42,13 +33,13 @@ class NewsCategory
 
     public function getCategories(): array
     {
-        return $this->categories;
+        return json_decode(Storage::disk('local')->get('categories.json'), true);
     }
 
     public function getCategoryById($id)
     {
         if (array_key_exists($id, $this->getCategories()))
-            return $this->categories[$id];
+            return json_decode(Storage::disk('local')->get('categories.json'), true)[$id];
         else
             return null;
     }

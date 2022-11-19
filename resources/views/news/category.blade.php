@@ -20,7 +20,7 @@
                     </div>
         @endif
     @empty
-        Нет новостей
+        Нет такой категории
     @endforelse
     </div>
 

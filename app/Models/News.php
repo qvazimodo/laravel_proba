@@ -5,40 +5,12 @@ namespace App\Models;
 
 
 use App\Models\NewsCategory;
+use Illuminate\Support\Facades\Storage;
 
 class News
-{private NewsCategory $category;
+{
+    private NewsCategory $category;
 
-    private array $news = [
-        1 => [
-            'id' => 1,
-            'title' => 'Новость 1',
-            'text' => 'А у нас новость 1 и она очень хорошая про спорт!',
-            'isPrivate' => false,
-            'category_id' => 1
-        ],
-        2 => [
-            'id' => 2,
-            'title' => 'Новость 2',
-            'text' => 'А у нас новость 1 и она очень хорошая про спорт!',
-            'isPrivate' => true,
-            'category_id' => 1
-        ],
-        3 => [
-            'id' => 3,
-            'title' => 'Новость 3',
-            'text' => 'А тут плохие новости про политику(((',
-            'isPrivate' => false,
-            'category_id' => 2
-        ],
-        4 => [
-            'id' => 4,
-            'title' => 'Новость 4',
-            'text' => 'Приватная про политику',
-            'isPrivate' => true,
-            'category_id' => 2
-        ],
-    ];
 
     public function __construct(NewsCategory $category)
     {
@@ -59,7 +31,7 @@ class News
 
     public function getNews(): array
     {
-        return $this->news;
+        return json_decode(Storage::disk('local')->get('news.json'), true);
     }
 
     public function getNewsId($id): ?array
