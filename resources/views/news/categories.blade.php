@@ -15,9 +15,9 @@
 
     @forelse ($categories as $category)
             <div class="col">
-                <a href="{{ route('news.category.show', $category['slug']) }}">
-                <h2>{{ $category['title']}}</h2></a>
-                <a href="{{ route('news.category.save', $category['slug'])}}" >Скачать новость</a>
+                <a href="{{ route('news.category.show', $category->slug) }}">
+                <h2>{{ $category->name}}</h2></a>
+                <a href="{{ route('news.category.save', $category->slug)}}" >Скачать новость</a>
             </div>
 
     @empty

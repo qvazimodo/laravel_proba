@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\NewsCategory;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class AdminIndexController extends Controller
@@ -16,18 +17,17 @@ class AdminIndexController extends Controller
     public function create(Request $request, NewsCategory $category, News $news) {
 
         if ($request->isMethod('post')) {
-            //TODO добавить новость в хранилище, прочитать старые новости, добавить новую в конце и сохранить обратно
-            $data = $news->getNews();
-            $data[] = [
+
+         $data = [
                 "title" => $request->title,
                 "text" => $request->text,
                 "isPrivate" => isset($request->isPrivate),
                 "category_id" => (int)$request->category
             ];
-            $id = array_key_last($data);
-            $data[$id]['id'] = $id;
-            Storage::disk('local')->put('news.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 
+           DB::table('news')->insert($data);
+
+           $id = DB::table('news')->max('id');
             // $request->flash();
             return redirect()->route('news.show',$id);
         }

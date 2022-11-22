@@ -11,6 +11,31 @@ class News
 {
     private NewsCategory $category;
 
+    private array $news = [
+        1 => [
+            'id' => 1,
+            'title' => 'Новость 1',
+            'text' => 'А у нас новость 1 и она очень хорошая про спорт!',
+            'isPrivate' => false,
+            'category_id' => 1
+        ],
+        2 => [
+            'id' => 2,
+            'title' => 'Новость 2',
+            'text' => 'А тут плохие новости про политику(((',
+            'isPrivate' => false,
+            'category_id' => 2
+        ],
+        '3' => [
+            'id' => 3,
+            'title' => 'Новость 3',
+            'text' => 'Приватная про политику',
+            'isPrivate' => true,
+            'category_id' => 2
+        ],
+    ];
+
+
 
     public function __construct(NewsCategory $category)
     {

@@ -8,6 +8,18 @@ use Illuminate\Support\Facades\Storage;
 
 class NewsCategory
 {
+    private array $categories = [
+        1 => [
+            'id' => 1,
+            'title' => 'Спорт',
+            'slug' => 'sport'
+        ],
+        2 => [
+            'id' => 2,
+            'title' => 'Политика',
+            'slug' => 'politics'
+        ],
+    ];
 
 
     public function getCategoryNameBySlug($slug)
