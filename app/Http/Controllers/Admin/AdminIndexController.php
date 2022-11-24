@@ -27,9 +27,9 @@ class AdminIndexController extends Controller
 
            DB::table('news')->insert($data);
 
-           $id = DB::table('news')->max('id');
-            // $request->flash();
-            return redirect()->route('news.show',$id);
+           $id = DB::table('news')->insertGetId($data);
+
+            return redirect()->route('news.show',$id)->with('success', 'Новость добавлена успешно!');
         }
 
         return view('admin.create', [

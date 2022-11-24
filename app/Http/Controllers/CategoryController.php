@@ -9,26 +9,27 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    public function index(NewsCategory $category) {
+    public function index() {
         $category =DB::table('categories')->get();
         return view('news.categories')
             ->with('categories', $category);
     }
 
-    public function show(News $news, NewsCategory $category, $slug) {
-        $category = DB::table('categories')->where('slug', '=', $slug)->get();
-
-        $news = DB::table('news')->where('category_id', '=', $category[0]->id)->get();
+    public function show($slug) {
+        $category = DB::table('categories')->where('slug', '=', $slug)->first();
+        $news = DB::table('news')->where('category_id', '=', $category->id)->get();
 
 
         return view('news.category')
             ->with('news', $news)
-            ->with('category', $category[0]->name);
+            ->with('category', $category->name);
     }
 
-    public function save(News $news,  $slug)
+    public function save($slug)
     {
-        return response()->json($news->getNewsByCategorySlug($slug))
+        $category = DB::table('categories')->where('slug', '=', $slug)->first();
+
+        return response()->json(DB::table('news')->where('category_id', '=', $category->id)->get())
             ->header('Content-Disposition', 'attachment; filename = "news.txt"')
             ->setEncodingOptions(JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
         //return view('news.one')->with('news', $news->getNewsId($id));
