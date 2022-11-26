@@ -24,7 +24,7 @@ class NewsSourceSeeder extends Seeder
         $faker = Faker\Factory::create('ru_RU');
         for ($i = 0; $i < 25; $i++) {
             $data[] = [
-                'source' => $faker->realText(rand(10, 30)),
+                'source' => $faker->url(),
                 'created_at' => $faker->date(),
                 'updated_at' => $faker->date(),
             ];

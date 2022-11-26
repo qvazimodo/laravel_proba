@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categories;
+use App\Models\Category;
 use App\Models\NewsCategory;
 use App\Models\News;
 use Illuminate\Http\Request;
@@ -11,29 +13,24 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminIndexController extends Controller
 {
-    public function index() {
-        return view('admin.index');
-    }
-    public function create(Request $request, NewsCategory $category, News $news) {
+
+    public function create(Request $request, News $news) {
 
         if ($request->isMethod('post')) {
+          $data = $request->all();
+            dd($data);
+            $news->fill($data);
 
-         $data = [
-                "title" => $request->title,
-                "text" => $request->text,
-                "isPrivate" => isset($request->isPrivate),
-                "category_id" => (int)$request->category
-            ];
+            $news->save();
 
-           DB::table('news')->insert($data);
+            //$id = $news->id;
 
-           $id = DB::table('news')->insertGetId($data);
-
-            return redirect()->route('news.show',$id)->with('success', 'Новость добавлена успешно!');
+            return redirect()->route('admin.create')->with('success', 'Новость добавлена успешно!');
+            //return redirect()->route('news.show',$id)->with('success', 'Новость добавлена успешно!');
         }
 
         return view('admin.create', [
-            'categories' => $category->getCategories()
+            'categories' => Category::all()
         ]);
     }
 

@@ -15,12 +15,11 @@
           <div class="col-6">
               <div class="p-3 border bg-light">
                  <div class="card">
-                     <img src="#" class="card-img-top" alt="">
+{{--                     <img src="#" class="card-img-top" alt="">--}}
                      <div class="card-body">
                        <h5 class="card-title">{{ $item->title}}</h5>
                            @if(!$item->isPrivate)
-                              <p class="card-text"> {{ $item->text}}</p>
-                              <a href="{{ route('news.show', $item->id) }}" class="btn btn-outline-primary">Перейти к новости</a>
+                              <a href="{{ route('news.show', $item) }}" class="btn btn-outline-primary">Перейти к новости</a>
                            @endif
 
                      </div>
@@ -31,6 +30,7 @@
         Нет новостей
     @endforelse
         </div>
+        {{ $news->links() }}
     </div>
 @endsection
 

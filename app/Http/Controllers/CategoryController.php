@@ -2,36 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NewsCategory;
+use App\Models\Category;
 use App\Models\News;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 
 class CategoryController extends Controller
 {
     public function index() {
-        $category =DB::table('categories')->get();
+        $category =Category::query()->paginate(5);
         return view('news.categories')
             ->with('categories', $category);
     }
 
     public function show($slug) {
-        $category = DB::table('categories')->where('slug', '=', $slug)->first();
-        $news = DB::table('news')->where('category_id', '=', $category->id)->get();
+        $category = Category::query()->where('slug',$slug)->first();
+
+        $news = Category::query()->where('slug',$slug)->first()->news();
+
 
 
         return view('news.category')
             ->with('news', $news)
             ->with('category', $category->name);
+
     }
 
     public function save($slug)
     {
-        $category = DB::table('categories')->where('slug', '=', $slug)->first();
+        $category = Category::query()->where('slug',$slug)->first();
 
-        return response()->json(DB::table('news')->where('category_id', '=', $category->id)->get())
+        return response()->json(News::query()->where('category_id','=', $category->id)->get())
             ->header('Content-Disposition', 'attachment; filename = "news.txt"')
             ->setEncodingOptions(JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-        //return view('news.one')->with('news', $news->getNewsId($id));
+
     }
 }
