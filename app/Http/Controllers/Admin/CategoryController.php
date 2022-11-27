@@ -20,10 +20,26 @@ class CategoryController extends Controller
     public function create(Request $request) {
         $category = new Category();
 
-        if ($request->isMethod('post')) {
+
+
+        return view('admin.category_create', [
+            'category' => $category
+        ]);
+    }
+
+    public function store(Request $request) {
+
+
+            $this->validate($request, [
+                'name' => 'required|min:3|max:20',
+                'slug' => 'required|min:3',
+            ], [], [
+                'name' => 'Название категории',
+                'slug' => 'Псевдоним категории',
+            ]);
 
             $data = $request->all();
-
+            $category = new Category();
             $category->fill($data);
 
 
@@ -31,13 +47,11 @@ class CategoryController extends Controller
 
             //$id = $news->id;
 
-            return redirect()->route('admin.category.create')->with('success', 'Категория добавлена успешно!');
+            return redirect()->route('admin.categories.create')->with('success', 'Категория добавлена успешно!');
             //return redirect()->route('news.show',$id)->with('success', 'Новость добавлена успешно!');
-        }
 
-        return view('admin.category_create', [
-            'category' => $category
-        ]);
+
+
     }
 
     public function edit(Category $category) {
@@ -50,11 +64,11 @@ class CategoryController extends Controller
 
         $category->fill($request->all());
         $category->save();
-        return redirect()->route('admin.category.index')->with('success', 'Категория изменена успешно!');
+        return redirect()->route('admin.categories.index')->with('success', 'Категория изменена успешно!');
     }
 
     public function destroy(Category $category) {
         $category->delete();
-        return redirect()->route('admin.category.index')->with('success', 'Категория удалена успешно!');
+        return redirect()->route('admin.categories.index')->with('success', 'Категория удалена успешно!');
     }
 }

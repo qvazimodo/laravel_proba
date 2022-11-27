@@ -10,14 +10,15 @@
 
 @section('content')
     <div class="container text-center">
-        <h1>Категории новостей</h1>
+        <h1>Список пользователей</h1>
         <div class="row">
 
-            @forelse ($categories as $category)
+            @forelse ($users as $user)
 
-                <h2>{{ $category->name }}</h2>
-                <form action="{{ route('admin.categories.destroy', $category) }}" method="post">
-                    <a href="{{ route('admin.categories.edit', $category) }}" class="btn btn-success">
+                <h2>{{ $user->name }}  <sup @if(!($user->is_admin)) style="display: none"  @endif> <i>(admin)</i> </sup></h2>
+
+                <form action="{{ route('admin.users.destroy', $user) }}" method="post">
+                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-success">
                         Edit
                     </a>
                     @csrf
@@ -39,3 +40,4 @@
 @section('footer')
     @include('admin.footer')
 @endsection
+

@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('title', 'Создание новости')
 
@@ -19,16 +19,32 @@
                             Добавить новость
                         @endif</div>
                     <div class="card-body">
-                        <form action="@if (!$news->id){{ route('admin.create') }}@else{{ route('admin.update', $news) }}@endif"
+                        <form
+                            action="@if (!$news->id){{ route('admin.news.store') }}@else{{ route('admin.news.update', $news) }}@endif"
                               method="post">
                             @csrf
+                            @if($news->id) @method('put') @endif
                             <div class="form-group">
                                 <label for="newsTitle">Заголовок новости</label>
+                                @if ($errors->has('title'))
+                                    <div class="alert alert-danger" role="alert">
+                                        @foreach($errors->get('title') as $error)
+                                            {{ $error }}
+                                        @endforeach
+                                    </div>
+                                @endif
                                 <input type="text" name="title" id="newsTitle" class="form-control" value="{{$news->title ?? old('title') }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="newsCategory">Категория новости</label>
+                                @if ($errors->has('category_id'))
+                                    <div class="alert alert-danger" role="alert">
+                                        @foreach ($errors->get('category_id') as $error)
+                                            {{ $error }}
+                                        @endforeach
+                                    </div>
+                                @endif
                                 <select name="category" id="newsCategory" class="form-control">
                                     @if ($news->id)
                                         @forelse($categories as $item)
@@ -50,6 +66,13 @@
 
                             <div class="form-group">
                                 <label for="newsText">Текст новости</label>
+                                @if ($errors->has('text'))
+                                    <div class="alert alert-danger" role="alert">
+                                        @foreach ($errors->get('text') as $error)
+                                            {{ $error }}
+                                        @endforeach
+                                    </div>
+                                @endif
                                 <textarea name="text" id="newsText" class="form-control">{{$news->text ?? old('text') }}</textarea>
                             </div>
 

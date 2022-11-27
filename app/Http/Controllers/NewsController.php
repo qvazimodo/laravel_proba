@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
@@ -12,7 +13,9 @@ class NewsController extends Controller
     {
         $news = News::query()->paginate(4);
 
-       return view('news.index')->with('news', $news);
+       return view('news.index')->with([
+           'news' => $news,
+            ]);
     }
 
     public function show(News $news)

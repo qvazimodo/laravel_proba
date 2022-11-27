@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\News;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
 {
@@ -15,30 +16,51 @@ class NewsController extends Controller
     {
         $news = News::query()->paginate(5);
 
+
         return view('admin.index')->with('news', $news);
     }
 
     public function create(Request $request) {
+
+
         $news = new News();
 
-        if ($request->isMethod('post')) {
 
-            $data = array_merge($request->all(),["isPrivate" => isset($request->isPrivate)]);
-
-            $news->fill($data);
-
-            $news->save();
-
-            //$id = $news->id;
-
-            return redirect()->route('admin.create')->with('success', 'Новость добавлена успешно!');
-            //return redirect()->route('news.show',$id)->with('success', 'Новость добавлена успешно!');
-        }
 
         return view('admin.create', [
             'news'=> $news,
             'categories' => Category::all()
         ]);
+    }
+
+    public function store(Request $request){
+        $tableNameCategory = (new Category())->getTable();
+
+
+            $this->validate($request, [
+                'title' => 'required|min:3|max:20',
+                'text' => 'required|min:3',
+                'isPrivate' => 'sometimes|in:1',
+                'category_id' => "exists:{$tableNameCategory},id"
+            ], [], [
+                'title' => 'Заголовок новости',
+                'text' => 'Текст новости',
+                'category_id' => "Категория новости"
+            ]);
+
+            $data = array_merge($request->all(),["isPrivate" => isset($request->isPrivate)]);
+
+            $news = new News();
+
+            $news->fill($data);
+
+            $news->save();
+
+
+
+            return redirect()->route('admin.news.index')->with('success', 'Новость добавлена успешно!');
+
+
     }
 
     public function edit(News $news) {
@@ -53,12 +75,12 @@ class NewsController extends Controller
         $news->fill($request->all());
         $news->isPrivate = isset($request->isPrivate);
         $news->save();
-        return redirect()->route('admin.index')->with('success', 'Новость изменена успешно!');
+        return redirect()->route('admin.news.index')->with('success', 'Новость изменена успешно!');
     }
 
     public function destroy(News $news) {
         $news->delete();
-        return redirect()->route('admin.index')->with('success', 'Новость удалена успешно!');
+        return redirect()->route('admin.news.index')->with('success', 'Новость удалена успешно!');
     }
 
 

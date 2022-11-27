@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('title')
     @parent | Админка
@@ -18,8 +18,8 @@
                         @forelse($news as $item)
                             <h2>{{ $item->title }}</h2>
 
-                            <form action="{{ route('admin.destroy', $item) }}" method="post">
-                                <a href="{{ route('admin.edit', $item) }}" class="btn btn-success">
+                            <form action="{{ route('admin.news.destroy', $item) }}" method="post">
+                                <a href="{{ route('admin.news.edit', $item) }}" class="btn btn-success">
                                     Edit
                                 </a>
                                 @csrf
