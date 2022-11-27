@@ -22,6 +22,14 @@ class CategoryController extends Controller
 
         if ($request->isMethod('post')) {
 
+            $this->validate($request, [
+                'name' => 'required|min:3|max:20',
+                'slug' => 'required|min:3',
+            ], [], [
+                'name' => 'Название категории',
+                'slug' => 'Псевдоним категории',
+            ]);
+
             $data = $request->all();
 
             $category->fill($data);

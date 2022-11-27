@@ -24,10 +24,24 @@
                             @csrf
                             <div class="form-group">
                                 <label for="categoryName">Название категории</label>
+                                @if ($errors->has('name'))
+                                    <div class="alert alert-danger" role="alert">
+                                        @foreach ($errors->get('name') as $error)
+                                            {{ $error }}
+                                        @endforeach
+                                    </div>
+                                @endif
                                 <input type="text" name="name" id="categoryName" class="form-control" value="{{$category->name ?? old('name') }}">
                             </div>
                             <div class="form-group">
                                 <label for="categoryNameSlug">Псевдоним категории(slug)</label>
+                                @if ($errors->has('slug'))
+                                    <div class="alert alert-danger" role="alert">
+                                        @foreach ($errors->get('slug') as $error)
+                                            {{ $error }}
+                                        @endforeach
+                                    </div>
+                                @endif
                                 <input type="text" name="slug" id="categoryNameSlug" class="form-control" value="{{$category->slug ?? old('slug') }}">
                             </div>
                             <div class="form-group">

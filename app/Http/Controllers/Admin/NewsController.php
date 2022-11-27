@@ -19,9 +19,23 @@ class NewsController extends Controller
     }
 
     public function create(Request $request) {
+
+
         $news = new News();
 
         if ($request->isMethod('post')) {
+            $tableNameCategory = (new Category())->getTable();
+
+            $this->validate($request, [
+                'title' => 'required|min:3|max:20',
+                'text' => 'required|min:3',
+                'isPrivate' => 'sometimes|in:1',
+                'category_id' => "exists:{$tableNameCategory},id"
+            ], [], [
+                'title' => 'Заголовок новости',
+                'text' => 'Текст новости',
+                'category_id' => "Категория новости"
+            ]);
 
             $data = array_merge($request->all(),["isPrivate" => isset($request->isPrivate)]);
 
