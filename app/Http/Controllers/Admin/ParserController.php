@@ -36,7 +36,6 @@ class ParserController extends Controller
             $source = NewsSource::firstOrCreate(
                 ['source' => $news['link']]
             );
-
             $id_category = Category::query()->select('id')->where('name', '=', $category->name)->get()->first()->id;
             $id_source = NewsSource::query()->select('id')->where('source', '=', $source->source)->get()->first()->id;
 

@@ -24,6 +24,7 @@
     Нет такой новости
     @endif
 
+
 </div>
 @endsection
 

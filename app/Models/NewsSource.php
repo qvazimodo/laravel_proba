@@ -9,6 +9,7 @@ class NewsSource extends Model
 {
     use HasFactory;
 
+
     protected $fillable = ['source'];
     public $timestamps = false;
 }

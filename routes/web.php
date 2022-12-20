@@ -50,7 +50,6 @@ Route::name('news.')
 
 
     });
-
 Route::match(['get', 'post'], '/userprofile', [UserProfileController::class, 'update'])->name('userUpdateProfile')->middleware('auth');
 
 Route::name('admin.')
