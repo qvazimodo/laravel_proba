@@ -14,7 +14,7 @@
                     <div class="card-header">Изменения профиля</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('news.userprofile') }}">
+                        <form method="POST" action="{{ route('userUpdateProfile') }}">
                             @csrf
 
                             <div class="form-group row">

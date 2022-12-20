@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('news', function (Blueprint $table) {
-            $table->foreign('news_source_id')->references('id')->on('news_sources');
+            $table->string('image')->default("link");
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('name', function (Blueprint $table) {
-            $table->dropForeign(['news_source_id']);
+        Schema::table('news', function (Blueprint $table) {
+            $table->dropColumn(['image']);
         });
     }
 };

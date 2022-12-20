@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\UserProfileController;
@@ -39,7 +40,7 @@ Route::name('news.')
         Route::get('/', [NewsController::class, 'index'])->name('index');
         Route::get('/one/{news}', [NewsController::class, 'show'])->name('show');
         Route::get('/save/{id}', [NewsController::class, 'save'])->name('save');
-        Route::match(['get', 'post'], '/userprofile', [UserProfileController::class, 'update'])->name('userprofile');
+        //Route::match(['get', 'post'], '/userprofile', [UserProfileController::class, 'update'])->name('userprofile');
         Route::name('category.')
             ->group(function () {
                 Route::get('categories', [CategoryController::class, 'index'])->name('index');
@@ -50,12 +51,14 @@ Route::name('news.')
 
     });
 
+Route::match(['get', 'post'], '/userprofile', [UserProfileController::class, 'update'])->name('userUpdateProfile')->middleware('auth');
+
 Route::name('admin.')
     ->prefix('admin')
     ->middleware(['auth', 'verified', 'is_admin'])
-    ->group(function () {
-        Route::match(['get', 'post'], '/profile', [ProfileController::class, 'update'])->name('updateProfile');
+        ->group(function () {
         Route::resource('/news', AdminNewsController::class)->except(['show']);
+        Route::get('/parser',[ParserController::class, 'index'])->name('parser');
         //CRUD
         /*
         Route::get('/', [AdminNewsController::class, 'index'])->name('index');

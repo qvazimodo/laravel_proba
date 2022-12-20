@@ -11,6 +11,9 @@
     <li class="nav-item">
         <a href="{{ route('admin.users.index') }}" class="nav-link link-dark px-2">Пользователии</a>
     </li>
+    <li class="nav-item">
+        <a href="{{ route('admin.parser') }}" class="nav-link link-dark px-2">Парсить</a>
+    </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Создать</a>
         <ul class="dropdown-menu">
@@ -19,8 +22,6 @@
             <li><a href="{{ route('admin.users.create') }}" class="nav-link link-dark px-2">Пользователя</a></li>
         </ul>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.updateProfile') }}">Мой профиль</a>
-    </li>
+
 
 </ul>

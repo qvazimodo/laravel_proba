@@ -16,7 +16,7 @@ class NewsSourceSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('news_source')->insert($this->getData());
+        DB::table('news_sources')->insert($this->getData());
     }
 
     private function getData() {

@@ -51,7 +51,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
-                                    <a class="nav-link" href="{{ route('news.userprofile') }}">Мой профиль</a>
+                                    <a class="nav-link" href="{{ route('userUpdateProfile') }}">Мой профиль</a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

@@ -13,6 +13,8 @@
      @if($news)
         @if(!$news->isPrivate)
         <h2>{{ $news->title }}</h2>
+            <div class="card-img" ><img src={{ $news->image }} alt=""></div>
+
         <p>{{ $news->text }}</p>
         <a href="{{ route('news.save', $news->id) }}" class="btn btn-outline-primary">Скачать новость</a>
         @else
