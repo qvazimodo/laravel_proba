@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app_js')
 
 @section('title', 'Создание новости')
 
@@ -73,8 +73,13 @@
                                         @endforeach
                                     </div>
                                 @endif
-                                <textarea name="text" id="newsText" class="form-control">{{$news->text ?? old('text') }}</textarea>
+                                <textarea  name="text" id="editor" class="form-control">{{empty(old())?$news->text : old('text') }}</textarea>
                             </div>
+
+
+                            <script>
+                                CKEDITOR.replace( 'editor', {filebrowserImageBrowseUrl: '/file-manager/ckeditor'});
+                            </script>
 
                             <div class="form-check">
                                 <input @if (($news->isPrivate == 1 ) || (old('isPrivate') == "1")) checked @endif id="newsPrivate" name="isPrivate"

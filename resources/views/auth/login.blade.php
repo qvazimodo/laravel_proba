@@ -48,6 +48,8 @@
                                         {{ __('Remember Me') }}
                                     </label>
                                 </div>
+                                <a href="{{ route('vkLogin') }}"><img src="vk.png" width="40" alt=""></a>
+                                <a href="{{ route('GitHubLogin') }}"><img src="icons8-github.png" width="40" alt=""></a>
                             </div>
                         </div>
 

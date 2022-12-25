@@ -10,14 +10,17 @@
 
 @section('content')
     <div class="container text-center">
-        <h1>Категории новостей</h1>
+        <h1>Источники новостей</h1>
         <div class="row">
 
-            @forelse ($categories as $category)
+            @forelse ($sources as $source)
+                <div>
+                    <h2><img src="{{ $source->avatar }}" width="40" alt=""> {{ $source->name }}</h2>
 
-                <h2>{{ $category->name }}</h2>
-                <form action="{{ route('admin.categories.destroy', $category) }}" method="post">
-                    <a href="{{ route('admin.categories.edit', $category) }}" class="btn btn-success">
+                </div>
+
+                <form action="{{ route('admin.sources.destroy', $source) }}" method="post">
+                    <a href="{{ route('admin.sources.edit', $source) }}" class="btn btn-success">
                         Edit
                     </a>
                     @csrf
@@ -26,10 +29,10 @@
                 </form>
 
             @empty
-                Нет категорий
+                Нет источников новостей
             @endforelse
 
-                {{ $categories->links() }}
+                {{ $sources->links() }}
 
         </div>
     </div>

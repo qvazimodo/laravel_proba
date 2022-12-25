@@ -18,7 +18,7 @@
 {{--                     <img src="#" class="card-img-top" alt="">--}}
                      <div class="card-body">
                        <h5 class="card-title">{{ $item->title}}</h5>
-                           @if(!$item->isPrivate)
+                           @if(!$item->isPrivate|| Auth::check())
                               <a href="{{ route('news.show', $item) }}" class="btn btn-outline-primary">Перейти к новости</a>
                            @endif
 

@@ -39,7 +39,7 @@ class NewsController extends Controller
 
             $this->validate($request, [
                 'title' => 'required|min:3|max:20',
-                'text' => 'required|min:3',
+                'text' => 'required|min:4',
                 'isPrivate' => 'sometimes|in:1',
                 'category_id' => "exists:{$tableNameCategory},id"
             ], [], [
@@ -58,6 +58,8 @@ class NewsController extends Controller
 
 
 
+
+
             return redirect()->route('admin.news.index')->with('success', 'Новость добавлена успешно!');
 
 
@@ -71,10 +73,32 @@ class NewsController extends Controller
 
     public function update(Request $request, News $news) {
 
+        $tableNameCategory = (new Category())->getTable();
+        $this->validate($request, [
+            'title' => 'required|min:3|max:150',
+            'text' => 'required|min:4',
+            'isPrivate' => 'sometimes|in:1',
+            'category_id' => "exists:{$tableNameCategory},id"
+        ], [], [
+            'title' => 'Заголовок новости',
+            'text' => 'Текст новости',
+            'category_id' => "Категория новости"
+        ]);
+
         $news->fill($request->all());
         $news->isPrivate = isset($request->isPrivate);
         $news->save();
-        return redirect()->route('admin.news.index')->with('success', 'Новость изменена успешно!');
+
+        $result = $news->save();
+        if ($result) {
+            return redirect()->route('admin.news.index')->with('success', 'Новость изменена успешно!');
+        } else {
+            return redirect()->route('admin.news.index')->with('error', 'Ошибка изменения новости');
+        }
+
+
+
+
     }
 
     public function destroy(News $news) {

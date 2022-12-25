@@ -10,6 +10,6 @@ class NewsSource extends Model
     use HasFactory;
 
 
-    protected $fillable = ['source'];
+    protected $fillable = ['source','name', 'link','avatar'];
     public $timestamps = false;
 }

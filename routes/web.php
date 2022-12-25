@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\NewsSourceController;
 use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -12,8 +15,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Admin\AdminIndexController as AdminIndexController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-
-
+use Laravel\Socialite\Facades\Socialite;
+use UniSharp\LaravelFilemanager\Lfm;
 
 
 /*
@@ -80,6 +83,10 @@ Route::name('admin.')
             ->group(function() {
                 Route::resource('/users', UsersController::class)->except(['show']);
             });
+            Route::name('')
+                ->group(function() {
+                    Route::resource('/sources', NewsSourceController::class)->except(['show']);
+                });
 
 
         Route::get('/test1', [AdminIndexController::class, 'test1'])->name('test1');
@@ -95,5 +102,36 @@ require __DIR__.'/auth.php';
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/auth/vk', [LoginController::class, 'loginVK'])->name('vkLogin')->middleware('guest');
+Route::get('/auth/vk/response', [LoginController::class, 'responseVK'])->name('vkResponse')->middleware('guest');
+
+Route::get('/auth/github', [LoginController::class, 'loginGitHub'])->name('GitHubLogin')->middleware('guest');
+Route::get('/auth/github/response', [LoginController::class, 'responseGitHub'])->name('GitHubResponse')->middleware('guest');
+
+/*Route::get('/auth/github/response', function(){
+    $githubUser = Socialite::driver('github')->user();
+
+    $user = User::updateOrCreate([
+        'id_in_soc' =>$githubUser->getId(),
+    ], [
+        'name' => !empty($githubUser->name)?$githubUser->name:$githubUser->getNickname(),
+        'email' => $githubUser->email,
+        'password' => '',
+        'type_auth' => 'github'
+        'id_in_soc' => !empty($githubUser->getId())? $githubUser->getId(): '',
+        'avatar' => !empty($githubUser->getAvatar())? $githubUser->getAvatar(): '',
+    ]);
+
+    Auth::login($user);
+
+    return redirect('/home');
+
+
+})->name('GitHubResponse')->middleware('guest');*/
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    Lfm::routes();
+});
 
 

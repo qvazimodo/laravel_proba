@@ -9,7 +9,7 @@ use App\Models\News;
 class CategoryController extends Controller
 {
     public function index() {
-        $category =Category::query()->paginate(5);
+        $category =Category::query()->paginate(20);
         return view('news.categories')
             ->with('categories', $category);
     }
